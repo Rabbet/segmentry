@@ -1,43 +1,45 @@
-defmodule AnalyticsElixir.Mixfile do
+defmodule Segmentry.MixProject do
   use Mix.Project
 
-  @source_url "https://github.com/stueccles/analytics-elixir"
-  @version "0.2.7"
+  @source_url "https://github.com/Rabbet/segmentry"
+  @version "0.3.0"
 
   def project do
     [
-      app: :segment,
+      app: :segmentry,
       version: @version,
-      elixir: "~> 1.0",
+      elixir: "~> 1.15",
+      elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
-      description: "analytics_elixir",
-      dialyzer: [plt_add_deps: [:app_tree]],
+      description: "Elixir client for Segment, built on Req",
+      dialyzer: [plt_add_deps: :app_tree],
       package: package(),
       docs: docs()
     ]
   end
 
   def application do
-    [applications: [:hackney, :logger, :retry, :tesla, :jason, :telemetry]]
+    [extra_applications: [:logger]]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
-      {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:hackney, "~> 1.15"},
-      {:jason, ">= 1.0.0"},
-      {:mox, "~> 0.5", only: :test},
-      {:retry, "~> 0.13"},
-      {:telemetry, "~> 0.4.2 or ~> 1.0"},
-      {:tesla, "~> 1.2"}
+      {:req, "~> 0.5"},
+      {:jason, "~> 1.4"},
+      {:telemetry, "~> 1.2"},
+      {:plug, "~> 1.16", only: :test},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
     ]
   end
 
   defp package do
     [
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
-      maintainers: ["Stuart Eccles"],
+      maintainers: ["Rabbet"],
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
@@ -45,9 +47,9 @@ defmodule AnalyticsElixir.Mixfile do
 
   defp docs do
     [
-      main: "Segment",
+      main: "Segmentry",
       api_reference: false,
-      source_ref: "#{@version}",
+      source_ref: "v#{@version}",
       source_url: @source_url
     ]
   end
