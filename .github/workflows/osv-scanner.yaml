@@ -5,11 +5,11 @@ name: OSV-Scanner
 
 on:
   pull_request:
-    branches: ["master"]
+    branches: ["main"]
   schedule:
     - cron: "42 20 * * 3"
   push:
-    branches: ["master"]
+    branches: ["main"]
 
 permissions:
   contents: read
