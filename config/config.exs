@@ -10,5 +10,4 @@ config :segmentry,
   retry_expiry: 10_000,
   retry_start: 100
 
-env_config = "#{Mix.env()}.exs"
-File.exists?("config/#{env_config}") && import_config(env_config)
+import_config "#{config_env()}.exs"

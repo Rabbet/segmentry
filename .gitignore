@@ -26,3 +26,4 @@ segment-*.tar
 .formatter.exs
 .vscode/
 .elixir_ls/
+.dexter
