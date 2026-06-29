@@ -1,17 +1,19 @@
 defmodule Segmentry.FakeSender do
   @moduledoc """
   Test double for `:sender_impl`. Forwards every `call/1` to a pid stored in
-  application env under `{Segmentry.FakeSender, :listener}` so tests can assert
-  on the events that were dispatched.
+  application env under `:fake_sender_listener` so tests can assert on the
+  events that were dispatched.
   """
+
+  @listener_key :fake_sender_listener
 
   def install(listener \\ self()) do
     previous = Application.get_env(:segmentry, :sender_impl)
-    Application.put_env(:segmentry, {__MODULE__, :listener}, listener)
+    Application.put_env(:segmentry, @listener_key, listener)
     Application.put_env(:segmentry, :sender_impl, __MODULE__)
 
     ExUnit.Callbacks.on_exit(fn ->
-      Application.delete_env(:segmentry, {__MODULE__, :listener})
+      Application.delete_env(:segmentry, @listener_key)
 
       case previous do
         nil -> Application.delete_env(:segmentry, :sender_impl)
@@ -21,7 +23,7 @@ defmodule Segmentry.FakeSender do
   end
 
   def call(event) do
-    pid = Application.fetch_env!(:segmentry, {__MODULE__, :listener})
+    pid = Application.fetch_env!(:segmentry, @listener_key)
     send(pid, {:fake_sender, event})
     :ok
   end
