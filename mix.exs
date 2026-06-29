@@ -27,12 +27,12 @@ defmodule Segmentry.MixProject do
 
   defp deps do
     [
-      {:req, "~> 0.5"},
+      {:req, "~> 0.6"},
       {:jason, "~> 1.4"},
       {:telemetry, "~> 1.2"},
       {:plug, "~> 1.16", only: :test},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
-      {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false}
     ]
   end
 

@@ -9,8 +9,7 @@
 A non-official Elixir client for [Segment](https://segment.com), built on [Req](https://hex.pm/packages/req).
 Supports batched delivery with automatic retries.
 
-This is a fork of [stueccles/analytics-elixir](https://github.com/stueccles/analytics-elixir) maintained by [Rabbet](https://github.com/Rabbet),
-modernized to use Req in place of Tesla/hackney.
+This is a fork of [stueccles/analytics-elixir](https://github.com/stueccles/analytics-elixir) maintained by [Rabbet](https://github.com/Rabbet), modernized to use Req in place of Tesla/hackney.
 
 ## Installation
 
@@ -96,7 +95,7 @@ Segmentry.Analytics.track(user_id, event, %{property1: ""}, context)
 - `config :segmentry, :retry_attempts` — retry count for failed requests. Default `3`.
 - `config :segmentry, :retry_expiry` — maximum delay (ms) between retries. Default `10_000`.
 - `config :segmentry, :retry_start` — base delay (ms) for the first retry. Default `100`.
-- `config :segmentry, :send_to_http` — when `false`, replaces the HTTP client with a stub plug that logs at `:debug` and returns `200`. Useful for dev/test. Default `true`.
+- `config :segmentry, :send_to_http` — when `false`, replaces the HTTP client with a no-op adapter that logs at `:debug` and returns `200`. Useful for dev/test. Default `true`.
 - `config :segmentry, :req_options` — keyword list merged into every `Req` client. Useful for injecting `Req.Test` plug stubs or overriding `:receive_timeout`.
 - `config :segmentry, :api_url` — Segment-compatible endpoint. Defaults to `https://api.segment.io/v1/`. Override for Segment's EU instance or compatible APIs like [Rudderstack](https://rudderstack.com).
 

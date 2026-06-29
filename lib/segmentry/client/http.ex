@@ -1,16 +1,3 @@
-defmodule Segmentry.Http.Stub do
-  @moduledoc """
-  `Req` adapter used when `:send_to_http` is set to `false`. Logs the request at
-  `:debug` level and replies with `200 OK` without making any network call.
-  """
-  require Logger
-
-  def call(request) do
-    Logger.debug("[Segmentry] HTTP API called with #{inspect(request)}")
-    {request, %Req.Response{status: 200, body: ""}}
-  end
-end
-
 defmodule Segmentry.Http do
   @moduledoc """
   Underlying implementation for making calls to the Segment HTTP API, built on `Req`.
@@ -26,7 +13,7 @@ defmodule Segmentry.Http do
   * `:retry_attempts` — number of times to retry against the Segment API. Default `3`.
   * `:retry_expiry` — maximum delay (ms) between retries. Default `10_000`.
   * `:retry_start` — base delay (ms) for the first retry. Default `100`.
-  * `:send_to_http` — if `false`, swaps in a stub plug that logs at `:debug` and replies `200`. Default `true`.
+  * `:send_to_http` — if `false`, swaps in a no-op adapter that logs at `:debug` and replies `200`. Default `true`.
   * `:req_options` — keyword list merged into every `Req` client. Useful for `:plug` (see `Req.Test`)
     or to override `:receive_timeout`.
   """
@@ -60,7 +47,7 @@ defmodule Segmentry.Http do
     if Segmentry.Config.send_to_http() do
       base
     else
-      Keyword.put_new(base, :adapter, &Segmentry.Http.Stub.call/1)
+      Keyword.put_new(base, :adapter, &Segmentry.Http.Noop.call/1)
     end
   end
 

@@ -28,13 +28,13 @@ defmodule Segmentry.HttpTest do
       assert client.options[:max_retries] == Segmentry.Config.retry_attempts()
     end
 
-    test "uses the stub adapter when send_to_http is false" do
+    test "uses the no-op adapter when send_to_http is false" do
       previous = Application.get_env(:segmentry, :send_to_http)
 
       try do
         Application.put_env(:segmentry, :send_to_http, false)
         client = Http.client("k")
-        assert client.adapter == (&Segmentry.Http.Stub.call/1)
+        assert client.adapter == (&Segmentry.Http.Noop.call/1)
       after
         Application.put_env(:segmentry, :send_to_http, previous)
       end
