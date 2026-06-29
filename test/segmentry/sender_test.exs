@@ -16,7 +16,11 @@ defmodule Segmentry.Analytics.SenderTest do
 
   test "starts and registers under the module name" do
     parent = self()
-    adapter = fn req -> send(parent, {:req, req}); {req, %Req.Response{status: 200}} end
+
+    adapter = fn req ->
+      send(parent, {:req, req})
+      {req, %Req.Response{status: 200}}
+    end
 
     {:ok, pid} = Sender.start_link("k", adapter: adapter)
     assert Process.whereis(Sender) == pid
@@ -24,7 +28,11 @@ defmodule Segmentry.Analytics.SenderTest do
 
   test "call/1 sends each event immediately and asynchronously" do
     parent = self()
-    adapter = fn req -> send(parent, {:req, req}); {req, %Req.Response{status: 200}} end
+
+    adapter = fn req ->
+      send(parent, {:req, req})
+      {req, %Req.Response{status: 200}}
+    end
 
     {:ok, _pid} = Sender.start_link("k", adapter: adapter)
 
@@ -37,7 +45,11 @@ defmodule Segmentry.Analytics.SenderTest do
 
   test "single-event call uses /track endpoint, not /batch" do
     parent = self()
-    adapter = fn req -> send(parent, {:req, req}); {req, %Req.Response{status: 200}} end
+
+    adapter = fn req ->
+      send(parent, {:req, req})
+      {req, %Req.Response{status: 200}}
+    end
 
     {:ok, _pid} = Sender.start_link("k", adapter: adapter)
     :ok = Sender.call(%Track{userId: "u", event: "one"})
@@ -48,7 +60,11 @@ defmodule Segmentry.Analytics.SenderTest do
 
   test "start_link/1 uses default Req options" do
     parent = self()
-    adapter = fn req -> send(parent, {:req, req}); {req, %Req.Response{status: 200}} end
+
+    adapter = fn req ->
+      send(parent, {:req, req})
+      {req, %Req.Response{status: 200}}
+    end
 
     Application.put_env(:segmentry, :req_options, adapter: adapter)
 
