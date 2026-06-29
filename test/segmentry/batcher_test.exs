@@ -2,7 +2,6 @@ defmodule Segmentry.Analytics.BatcherTest do
   use ExUnit.Case, async: false
 
   alias Segmentry.Analytics.{Batcher, Track}
-  alias Segmentry.ReqStub
 
   setup do
     parent = self()
@@ -135,8 +134,8 @@ defmodule Segmentry.Analytics.BatcherTest do
     assert Process.alive?(pid)
   end
 
-  test "start_link/1 uses default Req options", %{adapter: _adapter} do
-    Application.put_env(:segmentry, :req_options, adapter: ReqStub.adapter(self(), %Req.Response{status: 200}))
+  test "start_link/1 uses default Req options", %{adapter: adapter} do
+    Application.put_env(:segmentry, :req_options, adapter: adapter)
 
     try do
       {:ok, _pid} = Batcher.start_link("k")
