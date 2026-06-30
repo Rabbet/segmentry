@@ -13,7 +13,10 @@ defmodule Segmentry.Analytics.Types do
 end
 
 defmodule Segmentry.Analytics.Track do
-  @moduledoc false
+  @moduledoc """
+  A [`track`](https://segment.com/docs/connections/spec/track/) event — records
+  an action a user performed, named by `event`, with optional `properties`.
+  """
   @method "track"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -29,7 +32,10 @@ defmodule Segmentry.Analytics.Track do
 end
 
 defmodule Segmentry.Analytics.Identify do
-  @moduledoc false
+  @moduledoc """
+  An [`identify`](https://segment.com/docs/connections/spec/identify/) event —
+  ties a user to their `traits` (name, email, plan, etc.).
+  """
   @method "identify"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -44,7 +50,10 @@ defmodule Segmentry.Analytics.Identify do
 end
 
 defmodule Segmentry.Analytics.Alias do
-  @moduledoc false
+  @moduledoc """
+  An [`alias`](https://segment.com/docs/connections/spec/alias/) event — merges
+  two user identities by associating `userId` with a `previousId`.
+  """
   @method "alias"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -59,7 +68,10 @@ defmodule Segmentry.Analytics.Alias do
 end
 
 defmodule Segmentry.Analytics.Page do
-  @moduledoc false
+  @moduledoc """
+  A [`page`](https://segment.com/docs/connections/spec/page/) event — records a
+  web page view, named by `name`, with optional `properties`.
+  """
   @method "page"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -75,7 +87,10 @@ defmodule Segmentry.Analytics.Page do
 end
 
 defmodule Segmentry.Analytics.Screen do
-  @moduledoc false
+  @moduledoc """
+  A [`screen`](https://segment.com/docs/connections/spec/screen/) event — the
+  mobile equivalent of `Segmentry.Analytics.Page`, recording a screen view.
+  """
   @method "screen"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -91,7 +106,10 @@ defmodule Segmentry.Analytics.Screen do
 end
 
 defmodule Segmentry.Analytics.Group do
-  @moduledoc false
+  @moduledoc """
+  A [`group`](https://segment.com/docs/connections/spec/group/) event —
+  associates a user with a `groupId` (account/organization) and its `traits`.
+  """
   @method "group"
 
   defstruct Segmentry.Analytics.Types.common_fields() ++
@@ -107,7 +125,13 @@ defmodule Segmentry.Analytics.Group do
 end
 
 defmodule Segmentry.Analytics.Context do
-  @moduledoc false
+  @moduledoc """
+  Shared [context](https://segment.com/docs/connections/spec/common/#context)
+  attached to an event — library info, IP, locale, app, device, and so on.
+
+  Use `new/0` or `new/1` to build one; both populate `library` with Segmentry's
+  name and version automatically.
+  """
   @library_name Mix.Project.get().project()[:description]
   @library_version Mix.Project.get().project()[:version]
 

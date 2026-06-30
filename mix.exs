@@ -50,7 +50,18 @@ defmodule Segmentry.MixProject do
       main: "Segmentry",
       api_reference: false,
       source_ref: "v#{@version}",
-      source_url: @source_url
+      source_url: @source_url,
+      groups_for_modules: [
+        "Event structs": [
+          Segmentry.Analytics.Track,
+          Segmentry.Analytics.Identify,
+          Segmentry.Analytics.Screen,
+          Segmentry.Analytics.Page,
+          Segmentry.Analytics.Group,
+          Segmentry.Analytics.Alias,
+          Segmentry.Analytics.Context
+        ]
+      ]
     ]
   end
 end
